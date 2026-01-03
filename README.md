@@ -16,6 +16,9 @@ Sistem; **AES, ChaCha20, 3DES, Blowfish, CAST5** gibi simetrik şifreleme algori
 - **Hibrit Meta-Sezgisel Yaklaşım**  
   HHO algoritmasının güçlü **keşif (exploration)** yeteneği ile WOA algoritmasının etkili **sömürü (exploitation)** mekanizması birleştirilmiştir.
 
+- **Karşılaştırmalı Optimizasyon**  
+  Aynı maliyet fonksiyonunda **HHO-WOA**, **Differential Evolution (DE)** ve **Particle Swarm Optimization (PSO)** paralel koşturulur; yakınsama grafiği tek çıktıda karşılaştırılır.
+
 - **Robust (Dayanıklı) Optimizasyon**  
   Min-Max normalizasyonu yerine **Median / IQR** tabanlı *Robust Scaler* kullanılmıştır. Bu sayede işletim sistemi kaynaklı anlık takılmalar ve ölçüm sapmaları (outlier) analiz sonucunu bozmaz.
 
@@ -62,7 +65,7 @@ Optimizasyon süreci, sistem kaynaklarını gerçek zamanlı ölçerek başlatı
 
 ### Optimizasyonu Başlatma
 
-Aşağıdaki komut, HHO-WOA tabanlı optimizasyon sürecini başlatır:
+Aşağıdaki komut, HHO-WOA, DE ve PSO’yu aynı parametre uzayı ve maliyet fonksiyonuyla karşılaştırmalı olarak çalıştırır:
 
 ```bash
 python optimizer.py
@@ -73,6 +76,8 @@ Bu işlem sırasında sistem:
 - CPU ve RAM kullanımını anlık olarak ölçer  
 - Seçili kriptografik algoritmalar ve modlar üzerinde testler yapar  
 - Çok amaçlı maliyet fonksiyonunu minimize eden en uygun konfigürasyonu belirler  
+- `robust_result.png` içinde üç algoritmanın yakınsama eğrilerini üretir  
+- Konsolda her algoritma için en iyi konfigürasyon (algo/mod/key/buffer) ile yeni sürekli parametreler (`data_size_mb`, `repeats`) raporlanır  
 
 ---
 
@@ -96,6 +101,9 @@ Optimizasyon parametreleri `optimizer.py` dosyası içerisinden değiştirilebil
 - Popülasyon büyüklüğü  
 - Maksimum iterasyon sayısı  
 - Performans / güvenlik ağırlıkları  
+- Sürekli parametreler:  
+  - `data_size_mb` (1–8 MB arası dilimlenmiş veri)  
+  - `repeats` (1–10 arası benchmark tekrar sayısı)  
 
 Bu sayede sistem:
 - Performans odaklı  
