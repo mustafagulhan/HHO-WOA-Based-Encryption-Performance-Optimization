@@ -1,0 +1,36 @@
+# Python bytecode ve önbellekler
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Sanal ortamlar
+.venv/
+venv/
+env/
+.env
+.python-version
+pip-wheel-metadata/
+
+# Paketleme / dağıtım çıktıları
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# IDE / editör dosyaları
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Loglar ve geçici raporlar
+*.log
+logs/
+
+# Üretilen grafikler
+robust_result.png
+michalewicz_result.png
+

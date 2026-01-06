@@ -1,57 +1,55 @@
 # HHO-WOA Based Encryption Performance Optimization
 
-Bu proje, **Harris Hawks Optimization (HHO)** ve **Whale Optimization Algorithm (WOA)** algoritmalarının hibrit kullanımıyla, kriptografik algoritmaların **performans–güvenlik dengesini** optimize eden yapay zeka tabanlı bir sistemdir.
+This project is an AI-driven system that uses a hybrid of **Harris Hawks Optimization (HHO)** and the **Whale Optimization Algorithm (WOA)** to optimize the **performance–security balance** of cryptographic algorithms.
 
-Sistem; **AES, ChaCha20, 3DES, Blowfish, CAST5** gibi simetrik şifreleme algoritmalarını ve **CBC, GCM, CTR** gibi çalışma modlarını analiz eder. Çalıştığı donanımın **anlık sistem durumuna** göre en uygun konfigürasyonu belirler:
+The system evaluates symmetric ciphers such as **AES, ChaCha20, 3DES, Blowfish, CAST5** and modes like **CBC, GCM, CTR**. Based on the **real-time system state**, it selects the best configuration:
 
-- Şifreleme Algoritması  
-- Çalışma Modu  
-- Anahtar Uzunluğu  
-- Buffer Boyutu  
-
----
-
-## Özellikler
-
-- **Hibrit Meta-Sezgisel Yaklaşım**  
-  HHO algoritmasının güçlü **keşif (exploration)** yeteneği ile WOA algoritmasının etkili **sömürü (exploitation)** mekanizması birleştirilmiştir.
-
-- **Karşılaştırmalı Optimizasyon**  
-  Aynı maliyet fonksiyonunda **HHO-WOA**, **Differential Evolution (DE)** ve **Particle Swarm Optimization (PSO)** paralel koşturulur; yakınsama grafiği tek çıktıda karşılaştırılır.
-
-- **Robust (Dayanıklı) Optimizasyon**  
-  Min-Max normalizasyonu yerine **Median / IQR** tabanlı *Robust Scaler* kullanılmıştır. Bu sayede işletim sistemi kaynaklı anlık takılmalar ve ölçüm sapmaları (outlier) analiz sonucunu bozmaz.
-
-- **Çok Amaçlı (Multi-Objective) Optimizasyon**  
-  Aşağıdaki kriterleri içeren ağırlıklı bir maliyet fonksiyonu minimize edilir:
-  - Performans: Süre, CPU kullanımı, RAM tüketimi  
-  - Güvenlik: NIST kriptografik standartlarına uygunluk  
+- Cipher algorithm  
+- Mode of operation  
+- Key length  
+- Buffer size  
 
 ---
 
-## Dinamik Adaptasyon ve Sonuç Değişkenliği
+## Features
 
-Bu sistem **deterministik değil**, **stokastik ve dinamik** bir yapıdadır. Bu nedenle farklı çalıştırmalarda farklı sonuçlar elde edilebilir (ör. bir çalıştırmada `AES-CTR`, diğerinde `ChaCha20`).
+- **Hybrid Metaheuristic Approach**  
+  Combines HHO’s strong **exploration** capability with WOA’s effective **exploitation** mechanism.
 
-Bu durum bir hata değil, sistemin **adaptasyon kabiliyetinin doğal bir sonucudur**.
+- **Comparative Optimization**  
+  Runs **HHO-WOA**, **Differential Evolution (DE)**, and **Particle Swarm Optimization (PSO)** on the same cost function in parallel; convergence curves are compared in a single plot.
 
-### Bunun Temel Nedenleri
+- **Robust Optimization**  
+  Uses a **Median / IQR**-based Robust Scaler instead of Min-Max normalization to reduce the impact of OS-induced jitter and outlier measurements.
 
-1. **Dinamik Sistem Kaynakları**  
-   CPU yükü, önbellek (cache) durumu ve RAM kullanımı milisaniyeler içinde değişir. Optimizasyon algoritması, **o anki donanım koşullarına en uygun** çözümü seçer.
-
-2. **Meta-Sezgisel Algoritmaların Doğası**  
-   Çözüm uzayı rastgelelik içeren akıllı bir arama süreciyle keşfedilir. Performansları birbirine çok yakın olan güçlü adaylar (global optima) arasında geçişler yaşanması matematiksel olarak beklenen bir durumdur.
+- **Multi-Objective Optimization**  
+  Minimizes a weighted cost function that includes:  
+  - Performance: time, CPU usage, RAM consumption  
+  - Security: compliance with NIST cryptographic standards  
 
 ---
 
-## Kurulum (Installation)
+## Dynamic Adaptation and Result Variability
 
-Projenin çalışabilmesi için **Python 3.x** ve gerekli bağımlılıkların yüklü olması gerekmektedir.
+This system is **non-deterministic**, **stochastic**, and **dynamic**. Different runs may yield different results (e.g., one run may pick `AES-CTR`, another may pick `ChaCha20`). This is not an error—it is a natural outcome of the system’s **adaptive capability**.
 
-1. Projeyi bilgisayarınıza indirin.
-2. Terminal üzerinden proje dizinine gidin.
-3. Gerekli kütüphaneleri yükleyin:
+### Why Results Can Change
+
+1. **Dynamic System Resources**  
+   CPU load, cache state, and RAM usage change within milliseconds. The optimizer chooses the solution that best fits the **current hardware conditions**.
+
+2. **Nature of Metaheuristic Algorithms**  
+   The search space is explored with randomness. It is mathematically expected for the optimizer to switch among strong candidates (global optima) whose performance is very close.
+
+---
+
+## Installation
+
+You need **Python 3.x** and the project dependencies.
+
+1. Clone/download the project.  
+2. Navigate to the project directory in your terminal.  
+3. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -59,73 +57,72 @@ pip install -r requirements.txt
 
 ---
 
-## Kullanım (Usage)
+## Usage
 
-Optimizasyon süreci, sistem kaynaklarını gerçek zamanlı ölçerek başlatılır ve her çalıştırmada farklı sonuçlar üretebilir.
+The optimization process measures system resources in real time and can yield different results on each run.
 
-### Optimizasyonu Başlatma
+### Start the Optimization
 
-Aşağıdaki komut, HHO-WOA, DE ve PSO’yu aynı parametre uzayı ve maliyet fonksiyonuyla karşılaştırmalı olarak çalıştırır:
+Run the following command to execute HHO-WOA, DE, and PSO on the same search space and cost function:
 
 ```bash
 python optimizer.py
 ```
 
-Bu işlem sırasında sistem:
+During execution the system:
 
-- CPU ve RAM kullanımını anlık olarak ölçer  
-- Seçili kriptografik algoritmalar ve modlar üzerinde testler yapar  
-- Çok amaçlı maliyet fonksiyonunu minimize eden en uygun konfigürasyonu belirler  
-- `robust_result.png` içinde üç algoritmanın yakınsama eğrilerini üretir  
-- Konsolda her algoritma için en iyi konfigürasyon (algo/mod/key/buffer) ile yeni sürekli parametreler (`data_size_mb`, `repeats`) raporlanır  
-
----
-
-## Tekrar Çalıştırma ve Değerlendirme
-
-Sistem stokastik olduğu için:
-
-- Aynı komut tekrar çalıştırıldığında farklı ama **yakın-optimal** sonuçlar elde edilebilir.
-- Bu durum sistemin kararsızlığı değil, **adaptif optimizasyon yeteneğinin** doğrudan sonucudur.
-
-Gerçekçi değerlendirme için:
-- Birden fazla çalıştırma yapılması  
-- Sonuçların ortalama veya median değerler üzerinden karşılaştırılması önerilir.
+- Measures CPU and RAM usage in real time  
+- Benchmarks selected algorithms and modes  
+- Finds the configuration that minimizes the multi-objective cost function  
+- Produces convergence curves for all three algorithms in `robust_result.png`  
+- Reports the best configuration (algo/mode/key/buffer) and continuous parameters (`data_size_mb`, `repeats`) in the console  
 
 ---
 
-## Parametre Özelleştirme
+## Re-Running and Evaluation
 
-Optimizasyon parametreleri `optimizer.py` dosyası içerisinden değiştirilebilir:
+Because the system is stochastic:
 
-- Popülasyon büyüklüğü  
-- Maksimum iterasyon sayısı  
-- Performans / güvenlik ağırlıkları  
-- Sürekli parametreler:  
-  - `data_size_mb` (1–8 MB arası dilimlenmiş veri)  
-  - `repeats` (1–10 arası benchmark tekrar sayısı)  
+- Re-running the same command can produce different but **near-optimal** results.  
+- This is not instability; it is a direct result of **adaptive optimization**.
 
-Bu sayede sistem:
-- Performans odaklı  
-- Güvenlik öncelikli  
-- Dengeli (balanced) senaryolara göre yapılandırılabilir.
+For a fair assessment:  
+- Run multiple times.  
+- Compare averages or medians of the results.
 
 ---
 
-## Not
+## Parameter Customization
 
-Bu proje, kriptografik algoritmalar arasında **tek başına en hızlı veya en güvenli olanı** seçmeyi değil;  
-**çalıştığı sistem, anlık yük ve güvenlik gereksinimleri bağlamında en dengeli çözümü** bulmayı hedefler.
+You can adjust optimization parameters inside `optimizer.py`:
+
+- Population size  
+- Maximum iterations  
+- Performance / security weights  
+- Continuous parameters:  
+  - `data_size_mb` (1–8 MB chunked data)  
+  - `repeats` (1–10 benchmark repetitions)  
+
+This allows configurations that are:  
+- Performance-oriented  
+- Security-oriented  
+- Balanced  
 
 ---
 
-## Ek Çalışma: Michalewicz Benchmark (d=50, m=10)
+## Note
 
-- HHO-WOA, DE ve PSO algoritmaları, Michalewicz fonksiyonunun 50 boyutlu versiyonunu (m=10, 0 ≤ x_i ≤ π) minimize etmek için kullanılır.
-- Popülasyon: 60, iterasyon: 1000 (istek doğrultusunda).
-- Çıktı: `michalewicz_result.png` içinde üç algoritmanın yakınsama eğrileri; konsolda en iyi skorlar ve örnek çözüm bileşenleri.
+The goal is not to pick a single **fastest** or **most secure** cipher in isolation; it is to find the **best-balanced solution** for the current system load and security requirements.
 
-Çalıştırmak için:
+---
+
+## Additional Study: Michalewicz Benchmark (d=50, m=10)
+
+- HHO-WOA, DE, and PSO minimize the 50-dimensional Michalewicz function (m=10, 0 ≤ x_i ≤ π).  
+- Population: 60, iterations: 1000 (configurable).  
+- Output: convergence curves in `michalewicz_result.png`; console prints best scores and example solution components.
+
+Run with:
 
 ```bash
 python michalewicz_benchmark.py
